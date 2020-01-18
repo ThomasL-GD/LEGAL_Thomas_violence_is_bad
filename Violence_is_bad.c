@@ -26,12 +26,16 @@ int main(){
 		
 		nChoice = 0;
 		bPlayerDefend = 0;
+		if(nPlayerMP < 5){
+			nPlayerMP += 1;
+		}
 		if(nPlayerPoison >= 1){
 			
-			nRandom = (rand() % 7) + 7;
+			// The player take 1 damage less than the enemy, if you want to know why, go check the line 141
+			nRandom = (rand() % 7) + 6;
 			nPlayerLife -= nRandom;
 			nPlayerPoison -= 1;
-			printf("The enemy suffers from poison \n");
+			printf("You suffer from the poison, you take %d damage \n", nRandom);
 			
 		}
 		
@@ -44,7 +48,7 @@ int main(){
 			printf("1) Attack \n");
 			printf("2) Defend \n");
 			printf("3) Poison spell : 5MP \n");
-			printf("4) Antidote : 2MP \n");
+			printf("4) Antidote : 3MP \n");
 			printf("5) Check your satus \n");
 			printf("6) Observe the enemy \n");
 			
@@ -107,7 +111,7 @@ int main(){
 				}
 				
 				if(nAdvMP < 2){
-					printf("The enemy seems to out of magic. \n");
+					printf("The enemy seems to be out of magic. \n");
 				}
 				
 				
@@ -160,6 +164,66 @@ int main(){
 			bPlayerDefend = 1;
 			
 		}
+		
+		if(nChoice == 3){
+			
+			printf("You cast Poison...\n");
+			
+			if(nPlayerMP < 5){
+				
+				printf("But you don't have enough MP...\n");
+				
+			}
+			else{
+				
+				nPlayerMP -= 5;
+				
+				if(nAdvPoison <= 0){
+					
+					printf("You poisonned the enemy\n");
+					nAdvPoison = 3;
+					
+				}
+				else{
+					
+					printf("But he was already poisonned...\n");
+					nAdvPoison = 3;
+					
+				}
+				
+			}
+			
+		}
+		
+		if(nChoice == 4){
+			
+			printf("You cast Antidote...\n");
+			
+			if(nPlayerMP < 3){
+				
+				printf("But you don't have enough MP...\n");
+				
+			}
+			else{
+				
+				nPlayerMP -= 3;
+				
+				if(nPlayerPoison == 0){
+					
+					printf("But you were not poisonned\n");
+					nPlayerPoison = 0;
+					
+				}
+				else{
+					
+					printf("You cure yourself from the poison\n");
+					nPlayerPoison = 0;
+					
+				}
+				
+			}
+			
+		}
 		printf("\n");
 		
 		
@@ -170,7 +234,9 @@ int main(){
 			printf("ENEMY PHASE : \n");
 			
 			bAdvDefend = 0;
-			
+			if(nAdvMP < 5){
+				nAdvMP += 1;
+			}
 			if(nAdvPoison >= 1){
 				
 				nRandom = (rand() % 7) + 7;
@@ -184,7 +250,7 @@ int main(){
 			nChoice = 0;
 			while(nChoice == 0){
 				nChoice = 1;
-				nRandom = (rand() % 2) + 1;
+				nRandom = (rand() % 4) + 1;
 				
 				if(nRandom == 1){
 					
@@ -200,6 +266,7 @@ int main(){
 					
 					printf("He makes %d damage to you\n \n",nRandom);
 					nPlayerLife -= nRandom;
+					nRandom = 0;
 					
 				}
 				
@@ -209,6 +276,63 @@ int main(){
 					bAdvDefend = 1;
 					
 				}
+				
+				if(nRandom == 3){
+			
+					if(nAdvMP < 5){
+						
+						nChoice = 0;
+						
+					}
+					else{
+						
+						if(nPlayerPoison <= 0){
+							
+							printf("The enemy casts Poison\n");
+							printf("You are now poisonned\n");
+						
+							nAdvMP -= 5;
+							nPlayerPoison = 3;
+							
+						}
+						else{
+							
+							nChoice = 0;
+							
+						}
+						
+					}
+					
+				}
+				
+				if(nRandom == 4){
+			
+					if(nAdvMP < 3){
+						
+						nChoice = 0;
+						
+					}
+					else{
+						
+						
+						if(nAdvPoison == 0){
+							
+							nChoice = 0;
+							
+						}
+						else{
+					
+							printf("the enemy casts Antidote\n");	
+							nAdvMP -= 3;
+							nAdvPoison = 0;
+							printf("the enemy is now cured from the poison\n");
+							
+						}
+						
+					}
+					
+				}
+				
 			}
 			
 			printf("\n \n");
@@ -219,6 +343,16 @@ int main(){
 			printf("\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n             YOU WON !!! \n \n      ^o^ Congratulations ! ^o^ ");
 			
 		}
+		
+		if(nPlayerLife <= 0){
+			
+			nPlayerLife = 0;
+			while(nPlayerLife = 0){
+				printf("You died.   ");
+			}
+			
+		}
+		
 	}
 	
 	printf("\n \n \n \n \n \n \n \n \n \n \n \nGame design : Blue \nCoding : Blue \nArt : Blue \nStory : Blue \nHypo-theorico-philosopho-bilanguo-gamo-reflexion : Blue \nSpecial thanks : Family stuff and Blue \n \n \n \n");
