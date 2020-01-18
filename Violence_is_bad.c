@@ -36,6 +36,7 @@ int main(){
 		}
 		
 	
+		// To ask again what the player wants to if he type smth else than the possible actions like if he type 5 for checking status or if he type 5489465 because he tries to break my game
 		while(nChoice !=1 && nChoice != 2 && nChoice != 3 && nChoice != 4){
 			
 			printf("What do you want to do ? \n");
@@ -148,11 +149,18 @@ int main(){
 				
 			}
 			
-			printf("You made %d damage \n \n",nRandom);
+			printf("You made %d damage \n",nRandom);
 			nAdvLife -= nRandom;
 			
 		}
 		
+		if(nChoice == 2){
+			
+			printf("You defend yourself for this turn.\n");
+			bPlayerDefend = 1;
+			
+		}
+		printf("\n");
 		
 		
 		// Enemy phase--------------------------------------------------------------------------
@@ -172,13 +180,35 @@ int main(){
 				
 			}
 			
-			nRandom = 2;
+			// Here, nChoice permits to reroll enemy's action if he tries to cast antidote or poison while he can't.
+			nChoice = 0;
+			while(nChoice == 0){
+				nChoice = 1;
+				nRandom = (rand() % 2) + 1;
+				
+				if(nRandom == 1){
+					
+					nRandom = (rand() % 9) + 16;
+					printf("The enemy attacks you !\n");
 			
-			if(nRandom == 2){
+					if(bPlayerDefend == 1){
+						
+						printf("He hits you in your defense\n");
+						nRandom = nRandom/4;
+						
+					}
+					
+					printf("He makes %d damage to you\n \n",nRandom);
+					nPlayerLife -= nRandom;
+					
+				}
 				
-				printf("The enemy defends. \n");
-				bAdvDefend = 1;
-				
+				if(nRandom == 2){
+					
+					printf("The enemy defends. \n");
+					bAdvDefend = 1;
+					
+				}
 			}
 			
 			printf("\n \n");
@@ -186,9 +216,11 @@ int main(){
 		}
 		else{
 			
-			printf("\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n             YOU WON !!! \n \n      ^o^ Congratulations ! ^o^ \n \n \n \n \n \n \n \n \n \n \n \nGame design : Blue \nCoding : Blue \nArt : Blue \nStory : Blue \nHypo-theorico-philosopho-bilanguo-gamo-reflexion : Blue \nSpecial thanks : Family stuff and Blue \n \n \n \n");
+			printf("\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n             YOU WON !!! \n \n      ^o^ Congratulations ! ^o^ ");
 			
 		}
 	}
+	
+	printf("\n \n \n \n \n \n \n \n \n \n \n \nGame design : Blue \nCoding : Blue \nArt : Blue \nStory : Blue \nHypo-theorico-philosopho-bilanguo-gamo-reflexion : Blue \nSpecial thanks : Family stuff and Blue \n \n \n \n");
 	
 }
