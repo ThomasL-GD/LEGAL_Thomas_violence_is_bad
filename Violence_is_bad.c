@@ -1,6 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 int main(){
+	
+	srand (time (NULL));
 	
 	int nPlayerLife = 100;
 	int nAdvLife = 100;
@@ -9,9 +13,28 @@ int main(){
 	// The -1 in poison variables means that they were never poisonned before.
 	int nPlayerPoison = -1;
 	int nAdvPoison = -1;
+	int bPlayerDefend = 0;
+	int bAdvDefend = 0;
 	int nChoice = 0;
+	int nRandom =0;
+	
+	for(int i = 0; i<50; i++){
+		printf("\n");
+	}
 	
 	while (nPlayerLife > 0 && nAdvLife > 0){
+		
+		nChoice = 0;
+		bPlayerDefend = 0;
+		if(nPlayerPoison >= 1){
+			
+			nRandom = (rand() % 7) + 7;
+			nPlayerLife -= nRandom;
+			nPlayerPoison -= 1;
+			printf("The enemy suffers from poison \n");
+			
+		}
+		
 	
 		while(nChoice !=1 && nChoice != 2 && nChoice != 3 && nChoice != 4){
 			
@@ -73,7 +96,7 @@ int main(){
 				}
 				
 				
-				// For MP and Poison, if we would have learnt the random numbers, I would have created a small percentage of chances to fail to analyse the enemy and give a wrong information to the player.
+				
 				if(nAdvMP >= 5){
 					printf("The enemy seems to be full of magic! \n");
 				}
@@ -85,6 +108,7 @@ int main(){
 				if(nAdvMP < 2){
 					printf("The enemy seems to out of magic. \n");
 				}
+				
 				
 				
 				if(nAdvPoison >= 3){
@@ -108,6 +132,63 @@ int main(){
 			
 		}
 		
+		if(nChoice == 1){
+			// Makes a random number between 16 and 25 so there's a bit more chances that the player makes more damage than the base damage (20) to make him feel more powerful => microflow ┌( ಠ‿ಠ)┘
+			nRandom = (rand() % 10) + 16;
+			
+			if(bAdvDefend == 1){
+				
+				printf("You hit him right in his defense\n");
+				nRandom = nRandom/4;
+				
+			}
+			else{
+				
+				printf("You hit him ! \n");
+				
+			}
+			
+			printf("You made %d damage \n \n",nRandom);
+			nAdvLife -= nRandom;
+			
+		}
+		
+		
+		
+		// Enemy phase--------------------------------------------------------------------------
+		
+		
+		if(nAdvLife > 0){
+			printf("ENEMY PHASE : \n");
+			
+			bAdvDefend = 0;
+			
+			if(nAdvPoison >= 1){
+				
+				nRandom = (rand() % 7) + 7;
+				nAdvLife -= nRandom;
+				nAdvPoison -= 1;
+				printf("The enemy suffers from poison \n");
+				
+			}
+			
+			nRandom = 2;
+			
+			if(nRandom == 2){
+				
+				printf("The enemy defends. \n");
+				bAdvDefend = 1;
+				
+			}
+			
+			printf("\n \n");
+			
+		}
+		else{
+			
+			printf("\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n             YOU WON !!! \n \n      ^o^ Congratulations ! ^o^ \n \n \n \n \n \n \n \n \n \n \n \nGame design : Blue \nCoding : Blue \nArt : Blue \nStory : Blue \nHypo-theorico-philosopho-bilanguo-gamo-reflexion : Blue \nSpecial thanks : Family stuff and Blue \n \n \n \n");
+			
+		}
 	}
 	
 }
